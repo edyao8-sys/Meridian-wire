@@ -1,0 +1,768 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meridian Wire</title>
+<style>
+  :root { color-scheme: light; }
+  body { margin: 0; padding: 0; font: 14px -apple-system, BlinkMacSystemFont, sans-serif; background: #faf9f5; color: #141413; }
+  img { max-width: 100%; }
+  [hidden]:not([hidden="until-found"]) { display: none !important; }
+</style>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --paper: #eaedef;
+    --paper-raised: #ffffff;
+    --ink: #1a222c;
+    --ink-muted: #5b6570;
+    --ink-faint: #8b94a0;
+    --rule: #ccd2d5;
+    --rule-strong: #aab1b5;
+    --red: #a83a26;
+    --red-ink: #ffffff;
+    --amber: #93611f;
+    --amber-ink: #ffffff;
+    --focus: #1a222c;
+    --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+    --font-body: "Source Sans 3", -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #12161b;
+      --paper-raised: #171c22;
+      --ink: #e9e7df;
+      --ink-muted: #929aa2;
+      --ink-faint: #656d75;
+      --rule: #2b333b;
+      --rule-strong: #3a434c;
+      --red: #e2603f;
+      --red-ink: #14161a;
+      --amber: #d8a24a;
+      --amber-ink: #14161a;
+      --focus: #e9e7df;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #12161b;
+    --paper-raised: #171c22;
+    --ink: #e9e7df;
+    --ink-muted: #929aa2;
+    --ink-faint: #656d75;
+    --rule: #2b333b;
+    --rule-strong: #3a434c;
+    --red: #e2603f;
+    --red-ink: #14161a;
+    --amber: #d8a24a;
+    --amber-ink: #14161a;
+    --focus: #e9e7df;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    margin: 0;
+    padding: 0 20px;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  ::selection { background: var(--red); color: var(--red-ink); }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding-block: 28px 64px; }
+
+  /* ---------- Masthead ---------- */
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-bottom: 16px;
+    border-bottom: 3px double var(--rule-strong);
+  }
+  .masthead h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2rem, 6vw, 2.9rem);
+    letter-spacing: 0.01em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .masthead .tagline {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-top: 4px;
+  }
+  .masthead-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-muted);
+    text-align: right;
+    line-height: 1.6;
+    white-space: nowrap;
+  }
+  .masthead-meta .clock {
+    color: var(--ink);
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.03em;
+  }
+
+  /* ---------- Ticker ---------- */
+  .ticker-band {
+    border-bottom: 1px solid var(--rule);
+    background: var(--paper-raised);
+    overflow: hidden;
+    margin: 0 -20px;
+    padding: 0 20px;
+  }
+  .ticker-inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+  }
+  .ticker-label {
+    flex: none;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    color: var(--red-ink);
+    background: var(--red);
+    padding: 3px 7px;
+    border-radius: 2px;
+  }
+  .ticker-track-mask { flex: 1; overflow: hidden; }
+  .ticker-track {
+    display: flex;
+    gap: 2.5em;
+    white-space: nowrap;
+    width: max-content;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--ink-muted);
+    animation: scroll-left 55s linear infinite;
+  }
+  .ticker-track span.sep { color: var(--ink-faint); }
+  @keyframes scroll-left {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track { animation: none; }
+    .ticker-track-mask { overflow-x: auto; }
+  }
+
+  /* ---------- Controls ---------- */
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 20px 0 6px;
+  }
+  .desks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    flex: 1;
+  }
+  .desk-btn {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  .desk-btn:hover { border-color: var(--rule-strong); color: var(--ink); }
+  .desk-btn[aria-pressed="true"] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+  .desk-btn:focus-visible, .search input:focus-visible, #theme-toggle:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .search { position: relative; }
+  .search input {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--ink);
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 7px 10px 7px 28px;
+    width: 190px;
+    max-width: 40vw;
+  }
+  .search::before {
+    content: "⌕";
+    position: absolute;
+    left: 9px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-faint);
+    font-size: 0.95rem;
+  }
+  .count-line {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* ---------- Lead story ---------- */
+  .lead {
+    padding: 22px 0 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .tag-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .tag {
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+  .tag.urgent { background: var(--red); color: var(--red-ink); }
+  .tag.bulletin { background: var(--amber); color: var(--amber-ink); }
+  .tag.routine { background: transparent; color: var(--ink-faint); border: 1px solid var(--rule); }
+  .desk-name { color: var(--ink-muted); }
+  .dot { color: var(--ink-faint); }
+  .lead h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 4vw, 2.05rem);
+    line-height: 1.18;
+    margin: 0 0 10px;
+    text-wrap: balance;
+  }
+  .lead p {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: var(--ink);
+    max-width: 62ch;
+    margin: 0 0 10px;
+  }
+  .source-line {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.03em;
+  }
+  .source-line::before { content: "src — "; }
+  .source-line a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--ink-faint);
+  }
+  .source-line a:hover, .source-line a:focus-visible {
+    color: var(--ink);
+    border-bottom-color: var(--ink);
+  }
+
+  /* ---------- Translation ---------- */
+  .story-zh {
+    margin: 2px 0 10px;
+    padding-left: 12px;
+    border-left: 2px solid var(--rule);
+    color: var(--ink-muted);
+    font-size: 0.85rem;
+    line-height: 1.65;
+    max-width: 64ch;
+  }
+  .story-zh .zh-headline {
+    display: block;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .lead .story-zh {
+    font-size: 0.95rem;
+    max-width: 62ch;
+    margin: 0 0 12px;
+  }
+  .zh-audio-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-muted);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 2px 7px;
+    cursor: pointer;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  .zh-audio-btn:hover { border-color: var(--rule-strong); color: var(--ink); }
+  .zh-audio-btn.playing {
+    background: var(--red);
+    border-color: var(--red);
+    color: var(--red-ink);
+  }
+  .zh-audio-btn:disabled { opacity: 0.5; cursor: default; }
+  .zh-audio-btn:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  /* ---------- Feed ---------- */
+  .desk-section { margin-top: 8px; }
+  .desk-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding-top: 26px;
+    padding-bottom: 8px;
+  }
+  .desk-header h3 {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0;
+    white-space: nowrap;
+  }
+  .desk-header .rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+  .desk-header .desk-count {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .story {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 16px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .story:last-child { border-bottom: none; }
+  .story .tag-row { margin-bottom: 6px; }
+  .story h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.08rem;
+    line-height: 1.32;
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+  .story p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    margin: 0 0 6px;
+    max-width: 64ch;
+  }
+  .story-priority-col {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-top: 3px;
+  }
+  .story-priority-col .tag { display: inline-block; margin-bottom: 4px; }
+
+  .no-results {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--ink-faint);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+  }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.02em;
+    line-height: 1.7;
+  }
+
+  #theme-toggle {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 5px 8px;
+    cursor: pointer;
+  }
+  #theme-toggle:hover { border-color: var(--rule-strong); color: var(--ink); }
+
+  @media (max-width: 620px) {
+    .masthead { flex-direction: column; align-items: flex-start; }
+    .masthead-meta { text-align: left; }
+    .story { grid-template-columns: 1fr; gap: 4px; }
+    .story-priority-col { order: -1; }
+    .search input { width: 100%; max-width: none; }
+    .controls { flex-direction: column; align-items: stretch; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ticker-band">
+  <div class="wrap ticker-inner" style="padding-block:0;">
+    <span class="ticker-label">On the wire</span>
+    <div class="ticker-track-mask">
+      <div class="ticker-track" id="ticker-track"><!-- filled by JS --></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="masthead">
+    <div>
+      <h1>Meridian Wire</h1>
+      <span class="tagline">Six desks · one file · compiled for the day</span>
+    </div>
+    <div class="masthead-meta">
+      <button id="theme-toggle" type="button" aria-label="Toggle color theme">Aa · theme</button><br>
+      <span class="clock" id="clock">--:--:-- UTC</span><br>
+      Edition No. 2026.255 · compiled 12 Sep 2026
+    </div>
+  </header>
+
+  <div class="controls">
+    <nav class="desks" id="desk-filters" aria-label="Filter by desk"></nav>
+    <div class="search">
+      <input type="text" id="search-input" placeholder="Search the wire…" aria-label="Search stories">
+    </div>
+  </div>
+  <div class="count-line" id="count-line"></div>
+
+  <section class="lead" id="lead-story"></section>
+
+  <main id="feed"></main>
+  <p class="no-results" id="no-results" hidden>— no stories match this filter —</p>
+
+  <footer>
+    THIS IS A STATIC SNAPSHOT, not a live feed — this page cannot call outside news APIs, so nothing here refreshes on its own. Stories were compiled from AP, CBS News, Al Jazeera, NBC News, TechCrunch, Yahoo Sports and ScienceDaily on 12 Sep 2026, then condensed into short summaries. Priority tags (URGENT / BULLETIN / ROUTINE) reflect editorial judgment of newsworthiness, styled after traditional wire-service flags. Source links go to the original outlet's article. Chinese translations are rendered at a simplified HSK 3 reading level (short sentences, everyday vocabulary) rather than as literal translations, and may contain errors. The "🔊 Listen in Chinese" button uses your browser's built-in speech synthesis to read the translation aloud — quality and voice availability depend on your device/browser, and some browsers have no Chinese voice installed. Verify anything before acting on it — for a fresh pull, ask again.
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var DESKS = ["World", "Politics", "Business", "Tech", "Sports", "Science"];
+
+  var LEAD = {
+    desk: "World", priority: "urgent",
+    headline: "Houthi Forces Tighten Grip on Red Sea Chokepoint, Rattling Oil Markets",
+    summary: "Iran-backed Houthi fighters have consolidated control of Yemen's Bab el-Mandeb strait and threatened to close it entirely, prompting Saudi Arabia to shut a major pipeline and sending crude toward $101 a barrel.",
+    source: "CBS News, Al Jazeera",
+    url: "https://www.cbsnews.com/live-updates/iran-war-diesel-price-record-houthis-red-sea/",
+    zh: {
+      headline: "也门武装力量控制红海重要海峡，石油价格上涨",
+      summary: "伊朗支持也门的胡塞武装。胡塞武装现在控制了红海的一个重要海峡，还说要把它完全关闭。沙特阿拉伯因此关闭了一条重要的输油管道。现在石油价格越来越高，快到每桶101美元了。"
+    }
+  };
+
+  var STORIES = [
+    { desk: "World", priority: "bulletin", headline: "Trump, in Ireland, Says He'd 'Love' to See Reunification", summary: "The president held talks with Irish leaders and attended the Irish Open at his golf resort during an official visit, wading into a decades-old political question.", source: "CBS News, Al Jazeera", url: "https://www.nbcnews.com/world/ireland/trump-united-ireland-visit-golf-tournament-rcna597366",
+      zh: { headline: "特朗普在爱尔兰访问，说他“喜欢”爱尔兰统一", summary: "特朗普总统正在爱尔兰访问。他和爱尔兰的领导人谈话，还去看了在他自己高尔夫球场举行的爱尔兰公开赛。这是一个几十年的老问题，特朗普这次也说了自己的看法。" } },
+    { desk: "World", priority: "bulletin", headline: "New Details Emerge on Iranian Strikes at US Bases in Bahrain, Jordan", summary: "Fresh reporting outlines the scale of damage to American military installations from recent Iranian attacks in the region.", source: "Al Jazeera", url: "https://www.aljazeera.com/news/2026/9/11/blew-the-hell-out-of-it-how-iran-damaged-us-bases-in-bahrain-jordan",
+      zh: { headline: "伊朗袭击巴林、约旦的美军基地，新消息公开", summary: "最近有新的报道。报道说，伊朗最近攻击了美国在巴林和约旦的军事基地，基地受到了很大的损坏。" } },
+    { desk: "World", priority: "routine", headline: "BRICS Leaders, Meeting in India, Urge Middle East Restraint", summary: "The bloc called for de-escalation in the region's conflicts and for protecting the free flow of global trade as tensions mount.", source: "Al Jazeera", url: "https://www.aljazeera.com/news/2026/9/12/brics-summit-opens-in-new-delhi-amid-wars-global-tensions-tariffs",
+      zh: { headline: "金砖国家领导人在印度开会，呼吁中东保持克制", summary: "中东的紧张情况越来越严重。金砖国家的领导人在印度开会，他们说各方应该冷静，也应该保护世界贸易的自由。" } },
+    { desk: "World", priority: "routine", headline: "Train Derails in Normandy, Injuring 44; Sabotage Suspected", summary: "A regional train carrying 186 passengers came off the tracks Friday evening; French investigators are examining suspicious circumstances.", source: "CBS News", url: "https://www.cbsnews.com/news/france-normandy-train-derailment-sabotage/",
+      zh: { headline: "法国诺曼底火车出轨，44人受伤，怀疑是人为破坏", summary: "星期五晚上，一列火车在法国诺曼底出轨了。车上一共有186名乘客，44人受伤。法国警方正在调查，怀疑有人故意破坏铁路。" } },
+
+    { desk: "Politics", priority: "bulletin", headline: "America Marks 25 Years Since the September 11 Attacks", summary: "Four former presidents joined ceremonies at the World Trade Center memorial while President Trump spoke at the Pentagon on the anniversary.", source: "CBS News", url: "https://www.cbsnews.com/live-updates/september-11-terrorist-attacks-25-years-memorial-2026-09-11/",
+      zh: { headline: "美国纪念“9·11”事件25周年", summary: "今天是“9·11”事件25周年。四位美国前总统一起参加了在世贸中心的纪念活动。特朗普总统在五角大楼发表了讲话。" } },
+    { desk: "Politics", priority: "routine", headline: "CIA Declassifies Dozens of Never-Before-Seen 9/11 Documents", summary: "The agency released 71 intelligence reports detailing what officials knew in the lead-up to the 2001 attacks.", source: "CBS News", url: "https://www.cbsnews.com/news/cia-declassified-9-11-files-intelligence-reports/",
+      zh: { headline: "中情局公开几十份关于“9·11”的旧文件", summary: "美国中央情报局公开了71份以前没有公开过的报告。这些报告说明了2001年“9·11”事件发生以前，政府知道哪些信息。" } },
+    { desk: "Politics", priority: "routine", headline: "Administration to Send $500 Checks to Nearly 1 Million ACA Enrollees", summary: "Affordable Care Act recipients across 30 states will start receiving the payments in October.", source: "CBS News", url: "https://www.cbsnews.com/news/trump-500-checks-obamacare-enrollees/",
+      zh: { headline: "政府将给近100万医保用户每人发500美元", summary: "美国政府决定给参加“平价医疗法案”的人发钱。一共有30个州，接近100万人可以拿到500美元。他们将在10月收到这笔钱。" } },
+
+    { desk: "Business", priority: "urgent", headline: "Oil Tops $101 a Barrel as Middle East Conflict Widens", summary: "Crude closed at its highest level since May as the Red Sea standoff escalates, pushing US gas prices to $4.22 a gallon.", source: "CBS News, NBC News", url: "https://www.nbcnews.com/business/business-news/oil-hits-100-barrel-middle-east-conflict-intensifies-us-iran-trump-gas-rcna596752",
+      zh: { headline: "中东冲突加重，石油价格突破每桶101美元", summary: "因为中东的冲突越来越严重，石油价格涨到了今年5月以来的最高点。现在美国的汽油价格也涨到了每加仑4.22美元。" } },
+    { desk: "Business", priority: "urgent", headline: "Diesel Hits Record $6 a Gallon, Squeezing Freight and Farms", summary: "Record fuel costs are raising expenses across shipping and agriculture, with logistics firms warning of pass-through price hikes.", source: "NBC News", url: "https://www.cnn.com/2026/09/11/business/6-dollar-diesel-effects",
+      zh: { headline: "柴油价格创新高，每加仑6美元，运输业和农业压力大", summary: "柴油的价格现在是历史最高，每加仑要6美元。运输公司和农民因此花更多钱，物流公司说以后东西的价格也可能会涨。" } },
+    { desk: "Business", priority: "bulletin", headline: "Hot August Inflation Report Lifts Odds of a Fed Rate Hike to 90%", summary: "Traders now largely expect the Federal Reserve to raise rates this month after consumer prices accelerated faster than forecast.", source: "NBC News, CBS News", url: "https://www.cbsnews.com/news/august-cpi-report-inflation-fed-rates/",
+      zh: { headline: "8月物价上涨超出预期，美联储加息可能性升到90%", summary: "8月的物价比大家想的涨得更快。因此，很多人现在认为，美联储这个月很可能会加息。" } },
+    { desk: "Business", priority: "routine", headline: "L.L.Bean Doubles Down on Stores and Catalogs, Skips the AI Rush", summary: "The retailer is investing in physical locations and print marketing while deliberately steering clear of AI tools in its strategy.", source: "NBC News", url: "https://www.nbcnews.com/business/ceo-interviews/llbean-maine-roots-catalog-ai-stores-rcna596849",
+      zh: { headline: "L.L.Bean加大投资实体店和纸质目录，不用AI", summary: "这家公司决定继续开实体商店，也继续用纸做的商品目录做广告。它没有像别的公司一样，用人工智能做生意。" } },
+    { desk: "Business", priority: "routine", headline: "Trump Says He'd Be Fine With Chinese Automakers Building Cars in the US", summary: "The president signaled openness to Chinese manufacturers setting up US production, a notable shift in trade posture.", source: "NBC News", url: "https://www.nbcnews.com/politics/donald-trump/president-says-ok-china-building-cars-us-rcna597345",
+      zh: { headline: "特朗普说，他不反对中国车企在美国建厂", summary: "特朗普总统表示，如果中国的汽车公司想在美国生产汽车，他可以接受。这和他以前的贸易政策不太一样。" } },
+
+    { desk: "Tech", priority: "bulletin", headline: "AI Industry Leader Calls for a Slower, More Careful Pace on AI", summary: "A major AI company's chief warned that swarms of rogue AI agents could pose serious risks within months, while outlining a plan to 'pace the frontier.'", source: "CBS News, TechCrunch", url: "https://www.cbsnews.com/news/anthropic-ceo-dario-amodei-calls-slowdown-ai-development/",
+      zh: { headline: "AI行业负责人呼吁，AI的发展应该更慢、更小心", summary: "一家大型AI公司的负责人说，几个月以后，很多不受控制的AI可能会带来大问题。他还说了一个计划，希望大家能慢慢地、小心地发展AI。" } },
+    { desk: "Tech", priority: "bulletin", headline: "Revolut Discloses Customer Data Breach via Fake Government Requests", summary: "The fintech firm said attackers impersonated authorities to obtain customer information, raising fresh questions about verifying official data requests.", source: "TechCrunch", url: "https://techcrunch.com/2026/09/12/revolut-confirms-customer-data-breach-through-fake-government-requests/",
+      zh: { headline: "Revolut公司说，黑客假装政府部门，偷走用户信息", summary: "这家金融科技公司说，有黑客假装是政府部门，骗走了用户的个人信息。这件事让大家开始想，以后应该怎么确认这种官方请求是真的。" } },
+    { desk: "Tech", priority: "routine", headline: "Robotics Startup Mecka AI Nears $500M Valuation in Sequoia-Led Round", summary: "Investor appetite for robot-training data is fueling a fresh raise for the startup as the sector heats up.", source: "TechCrunch", url: "https://techcrunch.com/2026/09/11/mecka-ai-nears-500m-valuation-in-sequoia-led-deal-amid-rush-for-robot-training-data/",
+      zh: { headline: "机器人公司Mecka AI估值接近5亿美元，红杉领投", summary: "现在很多投资人对机器人训练数据很感兴趣。因为这样，这家做机器人的初创公司又拿到了一大笔新投资，公司的估值快到5亿美元了。" } },
+    { desk: "Tech", priority: "routine", headline: "Roblox Extends AI Game-Building Tools Beyond Its Own Platform", summary: "The update lets creators build and play AI-assisted games without staying inside the Roblox app.", source: "TechCrunch", url: "https://techcrunch.com/2026/09/11/roblox-is-making-it-easier-to-build-games-with-ai-and-play-them-outside-roblox/",
+      zh: { headline: "Roblox的AI游戏工具现在可以在平台外面用", summary: "以前，用Roblox的AI工具做游戏，只能在Roblox软件里面玩。现在不用打开Roblox，也可以做游戏，也可以玩游戏了。" } },
+
+    { desk: "Sports", priority: "routine", headline: "Ben Shelton Reaches US Open Final After Beating Fellow American Frances Tiafoe", summary: "Shelton advanced to his first major final with an all-American semifinal win, though Hawk-Eye data has since cast doubt on his claimed 158 mph serve.", source: "Yahoo Sports", url: "https://sports.yahoo.com/tennis/live/us-open-mens-semifinals-score-live-updates-ben-shelton-frances-tiafoe-karen-khachanov-alexander-zverev-180000007.html",
+      zh: { headline: "谢尔顿击败蒂亚福，晋级美国网球公开赛决赛", summary: "谢尔顿在半决赛中赢了另一个美国选手蒂亚福，这是他第一次进大满贯赛事的决赛。不过，后来的数据显示，他那个158英里的发球速度可能不对。" } },
+    { desk: "Sports", priority: "routine", headline: "Team USA Faces Spain for a Spot in the FIBA Women's World Cup Final", summary: "Caitlin Clark and Team USA meet Spain in the semifinal with the championship game on the line.", source: "Yahoo Sports", url: "https://sports.yahoo.com/articles/watch-caitlin-clark-usa-vs-113825659.html",
+      zh: { headline: "美国女篮将战西班牙，争夺篮球世界杯决赛名额", summary: "克拉克和美国女子篮球队要在半决赛跟西班牙比赛。赢的球队可以进决赛，争夺冠军。" } },
+    { desk: "Sports", priority: "routine", headline: "Packers' Tucker Kraft and Raiders' Michael Mayer Land Big Tight End Deals", summary: "Green Bay extended Kraft for up to $92 million over four years, and Las Vegas signed Mayer to a three-year, $45 million contract.", source: "Yahoo Sports", url: "https://sports.yahoo.com/nfl/breaking-news/article/packers-tucker-kraft-signs-reported-4-year-75m-contract-extension-144923835.html",
+      zh: { headline: "克拉夫特和梅耶尔签下大合同", summary: "绿湾包装工队和克拉夫特续签了合同，四年最多9200万美元。拉斯维加斯突袭者队也和梅耶尔签了新合同，三年4500万美元。" } },
+
+    { desk: "Science", priority: "bulletin", headline: "Scientists Show Heart Muscle Can Regenerate After a Heart Attack", summary: "Researchers demonstrated for the first time that damaged heart cells can regrow, challenging decades of assumptions about permanent cardiac injury.", source: "ScienceDaily", url: "https://www.sciencedaily.com/releases/2026/09/260909231754.htm",
+      zh: { headline: "科学家发现，心脏病发作后心肌可以再生", summary: "以前大家认为，心脏受伤以后不能恢复。这次科学家第一次证明，受伤的心脏细胞其实是可以重新长出来的。" } },
+    { desk: "Science", priority: "routine", headline: "Ozempic's Semaglutide May Slow Aging, Mouse Study Finds", summary: "The drug extended lifespan and improved memory and muscle function in older mice beyond the effects of calorie restriction alone.", source: "ScienceDaily", url: "https://www.sciencedaily.com/releases/2026/09/260911214238.htm",
+      zh: { headline: "老鼠实验显示，Ozempic的成分也许能让身体变老得更慢", summary: "研究人员给年纪大的老鼠用了这种药，发现老鼠活得更久了，记忆力和肌肉也变得更好。这个效果比只是少吃东西更好。" } },
+    { desk: "Science", priority: "routine", headline: "Mercury's Crust Points to a Fierier Volcanic Past Than Thought", summary: "New analysis finds far less silicon dioxide than expected, suggesting the planet's surface formed from deeper, more extensively melted rock.", source: "ScienceDaily", url: "https://www.sciencedaily.com/releases/2026/09/260911003854.htm",
+      zh: { headline: "新研究显示，水星以前的火山活动比想的更强烈", summary: "新的分析发现，水星表面的二氧化硅比大家以前想的少很多。这说明水星的表面可能是很深的岩石熔化后形成的。" } }
+  ];
+
+  var PRIORITY_LABEL = { urgent: "Urgent", bulletin: "Bulletin", routine: "Routine" };
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function tagHTML(priority) {
+    return '<span class="tag ' + priority + '">' + PRIORITY_LABEL[priority] + '</span>';
+  }
+
+  function sourceLineHTML(item) {
+    if (item.url) {
+      return '<div class="source-line"><a href="' + esc(item.url) + '" target="_blank" rel="noopener noreferrer">' + esc(item.source) + '</a></div>';
+    }
+    return '<div class="source-line">' + esc(item.source) + '</div>';
+  }
+
+  function zhHTML(item) {
+    if (!item.zh) return "";
+    var spoken = item.zh.headline + "。" + item.zh.summary;
+    return '<div class="story-zh" lang="zh-Hans"><span class="zh-headline">' + esc(item.zh.headline) + '</span>' + esc(item.zh.summary) +
+      ' <button class="zh-audio-btn" type="button" data-zh="' + esc(spoken) + '" aria-label="Listen to this story in Chinese">🔊 Listen in Chinese</button>' +
+      '</div>';
+  }
+
+  // ---- Lead story ----
+  function renderLead() {
+    var el = document.getElementById("lead-story");
+    el.innerHTML =
+      '<div class="tag-row">' + tagHTML(LEAD.priority) +
+      '<span class="desk-name">' + esc(LEAD.desk) + ' Desk</span></div>' +
+      '<h2>' + esc(LEAD.headline) + '</h2>' +
+      '<p>' + esc(LEAD.summary) + '</p>' +
+      zhHTML(LEAD) +
+      sourceLineHTML(LEAD);
+  }
+
+  // ---- Filters ----
+  var activeDesk = "All";
+  var searchTerm = "";
+
+  function renderFilters() {
+    var nav = document.getElementById("desk-filters");
+    var all = ["All"].concat(DESKS);
+    nav.innerHTML = all.map(function (d) {
+      return '<button class="desk-btn" data-desk="' + esc(d) + '" aria-pressed="' + (d === activeDesk) + '">' + esc(d) + '</button>';
+    }).join("");
+    nav.querySelectorAll(".desk-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        activeDesk = btn.getAttribute("data-desk");
+        renderFilters();
+        renderFeed();
+      });
+    });
+  }
+
+  // ---- Feed ----
+  function matches(story) {
+    var deskOK = activeDesk === "All" || story.desk === activeDesk;
+    if (!deskOK) return false;
+    if (!searchTerm) return true;
+    var hay = (story.headline + " " + story.summary + " " + story.source + " " + story.desk).toLowerCase();
+    return hay.indexOf(searchTerm) !== -1;
+  }
+
+  function renderFeed() {
+    stopSpeaking();
+    var visible = STORIES.filter(matches);
+    var feed = document.getElementById("feed");
+    var noResults = document.getElementById("no-results");
+    var countLine = document.getElementById("count-line");
+
+    // Lead always shows on the unfiltered "All" view; hide it whenever a search or desk filter is active
+    document.getElementById("lead-story").hidden = !(activeDesk === "All" && !searchTerm);
+
+    var total = visible.length + (activeDesk === "All" && !searchTerm ? 1 : 0);
+    countLine.textContent = total + (total === 1 ? " story" : " stories") + (activeDesk !== "All" ? " · " + activeDesk + " desk" : "") + (searchTerm ? " · matching “" + searchTerm + "”" : "");
+
+    if (visible.length === 0) {
+      feed.innerHTML = "";
+      noResults.hidden = false;
+      return;
+    }
+    noResults.hidden = true;
+
+    var byDesk = {};
+    DESKS.forEach(function (d) { byDesk[d] = []; });
+    visible.forEach(function (s) { byDesk[s.desk].push(s); });
+
+    var html = "";
+    DESKS.forEach(function (desk) {
+      var items = byDesk[desk];
+      if (!items.length) return;
+      html += '<section class="desk-section">' +
+        '<div class="desk-header"><h3>' + esc(desk) + ' Desk</h3><div class="rule"></div><span class="desk-count">' + items.length + '</span></div>';
+      items.forEach(function (s) {
+        html += '<article class="story">' +
+          '<div class="story-priority-col">' + tagHTML(s.priority) + '</div>' +
+          '<div>' +
+          '<h4>' + esc(s.headline) + '</h4>' +
+          '<p>' + esc(s.summary) + '</p>' +
+          zhHTML(s) +
+          sourceLineHTML(s) +
+          '</div></article>';
+      });
+      html += '</section>';
+    });
+    feed.innerHTML = html;
+  }
+
+  // ---- Search ----
+  document.getElementById("search-input").addEventListener("input", function (e) {
+    searchTerm = e.target.value.trim().toLowerCase();
+    renderFeed();
+  });
+
+  // ---- Chinese audio (browser speech synthesis; no network call) ----
+  var currentAudioBtn = null;
+
+  function resetAudioBtn(btn) {
+    btn.classList.remove("playing");
+    btn.textContent = "🔊 Listen in Chinese";
+  }
+
+  function stopSpeaking() {
+    if (window.speechSynthesis) {
+      try { speechSynthesis.cancel(); } catch (e) {}
+    }
+    if (currentAudioBtn) resetAudioBtn(currentAudioBtn);
+    currentAudioBtn = null;
+  }
+
+  function speakZh(text, btn) {
+    if (!("speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined") {
+      btn.disabled = true;
+      btn.textContent = "Audio unsupported";
+      return;
+    }
+    var wasThisPlaying = btn === currentAudioBtn;
+    stopSpeaking();
+    if (wasThisPlaying) return; // clicking the playing button just stops it
+
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "zh-CN";
+    var voices = speechSynthesis.getVoices();
+    var zhVoice = voices.filter(function (v) { return /^zh/i.test(v.lang); })[0];
+    if (zhVoice) utter.voice = zhVoice;
+    utter.onend = function () { if (currentAudioBtn === btn) { resetAudioBtn(btn); currentAudioBtn = null; } };
+    utter.onerror = function () { if (currentAudioBtn === btn) { resetAudioBtn(btn); currentAudioBtn = null; } };
+
+    currentAudioBtn = btn;
+    btn.classList.add("playing");
+    btn.textContent = "■ Stop";
+    speechSynthesis.speak(utter);
+  }
+
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest && e.target.closest(".zh-audio-btn");
+    if (!btn) return;
+    speakZh(btn.getAttribute("data-zh"), btn);
+  });
+
+  // ---- Ticker ----
+  function renderTicker() {
+    var all = [LEAD].concat(STORIES);
+    var text = all.map(function (s) { return s.headline.toUpperCase(); }).join("   <span class=\"sep\">•</span>   ");
+    var track = document.getElementById("ticker-track");
+    track.innerHTML = text + "   <span class=\"sep\">•</span>   " + text; // duplicate for seamless loop
+  }
+
+  // ---- Clock ----
+  function tickClock() {
+    var el = document.getElementById("clock");
+    var now = new Date();
+    var h = String(now.getUTCHours()).padStart(2, "0");
+    var m = String(now.getUTCMinutes()).padStart(2, "0");
+    var s = String(now.getUTCSeconds()).padStart(2, "0");
+    el.textContent = h + ":" + m + ":" + s + " UTC";
+  }
+
+  // ---- Theme toggle ----
+  function initTheme() {
+    var root = document.documentElement;
+    var btn = document.getElementById("theme-toggle");
+    var stored = null;
+    try { stored = localStorage.getItem("meridian-theme"); } catch (e) {}
+    if (stored === "light" || stored === "dark") root.setAttribute("data-theme", stored);
+    btn.addEventListener("click", function () {
+      var current = root.getAttribute("data-theme");
+      var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      var effectiveDark = current ? current === "dark" : prefersDark;
+      var next = effectiveDark ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("meridian-theme", next); } catch (e) {}
+    });
+  }
+
+  renderLead();
+  renderFilters();
+  renderFeed();
+  renderTicker();
+  initTheme();
+  tickClock();
+  setInterval(tickClock, 1000);
+})();
+</script>
+
+</body>
+</html>
