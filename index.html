@@ -1,16 +1,14 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Meridian Wire</title>
 <style>
   :root { color-scheme: light; }
-  body { margin: 0; padding: 0; font: 14px -apple-system, BlinkMacSystemFont, sans-serif; background: #faf9f5; color: #141413; }
   img { max-width: 100%; }
-  [hidden]:not([hidden="until-found"]) { display: none !important; }
-</style>
-<style>
+  [hidden] { display: none !important; }
+
   @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
   :root {
@@ -463,7 +461,7 @@
     <div class="masthead-meta">
       <button id="theme-toggle" type="button" aria-label="Toggle color theme">Aa · theme</button><br>
       <span class="clock" id="clock">--:--:-- UTC</span><br>
-      Edition No. 2026.255 · compiled 12 Sep 2026
+      Edition No. 2026.256 · compiled 13 Sep 2026
     </div>
   </header>
 
@@ -481,7 +479,7 @@
   <p class="no-results" id="no-results" hidden>— no stories match this filter —</p>
 
   <footer>
-    THIS IS A STATIC SNAPSHOT, not a live feed — this page cannot call outside news APIs, so nothing here refreshes on its own. Stories were compiled from AP, CBS News, Al Jazeera, NBC News, TechCrunch, Yahoo Sports and ScienceDaily on 12 Sep 2026, then condensed into short summaries. Priority tags (URGENT / BULLETIN / ROUTINE) reflect editorial judgment of newsworthiness, styled after traditional wire-service flags. Source links go to the original outlet's article. Chinese translations are rendered at a simplified HSK 3 reading level (short sentences, everyday vocabulary) rather than as literal translations, and may contain errors. The "🔊 Listen in Chinese" button uses your browser's built-in speech synthesis to read the translation aloud — quality and voice availability depend on your device/browser, and some browsers have no Chinese voice installed. Verify anything before acting on it — for a fresh pull, ask again.
+    THIS IS A STATIC SNAPSHOT, not a live feed — this is a plain HTML file with no server or API behind it, so nothing here refreshes on its own. Stories were compiled from AP, Reuters, CBS News, NBC News, Al Jazeera, CNN, Bloomberg, CNBC, ESPN and ScienceDaily on 13 Sep 2026, then condensed into short summaries. Priority tags (URGENT / BULLETIN / ROUTINE) reflect editorial judgment of newsworthiness, styled after traditional wire-service flags. Source links go to the original outlet's article. Chinese translations use Taiwan Mandarin (Traditional characters) in a casual, spoken style, written simply enough for an elementary-school reader (roughly 3rd-grade level) — not a literal or textbook rendering — and may contain errors. The "🔊 Listen in Chinese" button uses your browser's built-in speech synthesis (preferring a Taiwan zh-TW voice when one is installed) to read the translation aloud — quality and voice availability depend on your device/browser, and some browsers have no Chinese voice installed. Verify anything before acting on it — for a fresh pull, ask again.
   </footer>
 </div>
 
@@ -493,66 +491,64 @@
 
   var LEAD = {
     desk: "World", priority: "urgent",
-    headline: "Houthi Forces Tighten Grip on Red Sea Chokepoint, Rattling Oil Markets",
-    summary: "Iran-backed Houthi fighters have consolidated control of Yemen's Bab el-Mandeb strait and threatened to close it entirely, prompting Saudi Arabia to shut a major pipeline and sending crude toward $101 a barrel.",
-    source: "CBS News, Al Jazeera",
-    url: "https://www.cbsnews.com/live-updates/iran-war-diesel-price-record-houthis-red-sea/",
+    headline: "Sweden Holds Knife-Edge Election That Could Bring the Far Right Into Government",
+    summary: "Swedes went to the polls today in an extremely tight election that could put the far-right Sweden Democrats into a governing coalition for the first time in the party's history, with results expected tonight.",
+    source: "Al Jazeera",
+    url: "https://www.aljazeera.com/news/2026/9/13/voting-under-way-in-sweden-election-that-could-see-far-right-enter-govt",
     zh: {
-      headline: "也门武装力量控制红海重要海峡，石油价格上涨",
-      summary: "伊朗支持也门的胡塞武装。胡塞武装现在控制了红海的一个重要海峡，还说要把它完全关闭。沙特阿拉伯因此关闭了一条重要的输油管道。现在石油价格越来越高，快到每桶101美元了。"
+      headline: "瑞典選舉好緊張，大家都在等結果",
+      summary: "今天，瑞典人要投票，選出新的政府。這次選舉競爭很激烈，沒有人知道誰會贏。有一個叫「瑞典民主黨」的政黨，立場比較強硬。如果他們這次加入政府，就是這個黨第一次做到這件事。今天晚上，大家就會知道結果了。"
     }
   };
 
   var STORIES = [
-    { desk: "World", priority: "bulletin", headline: "Trump, in Ireland, Says He'd 'Love' to See Reunification", summary: "The president held talks with Irish leaders and attended the Irish Open at his golf resort during an official visit, wading into a decades-old political question.", source: "CBS News, Al Jazeera", url: "https://www.nbcnews.com/world/ireland/trump-united-ireland-visit-golf-tournament-rcna597366",
-      zh: { headline: "特朗普在爱尔兰访问，说他“喜欢”爱尔兰统一", summary: "特朗普总统正在爱尔兰访问。他和爱尔兰的领导人谈话，还去看了在他自己高尔夫球场举行的爱尔兰公开赛。这是一个几十年的老问题，特朗普这次也说了自己的看法。" } },
-    { desk: "World", priority: "bulletin", headline: "New Details Emerge on Iranian Strikes at US Bases in Bahrain, Jordan", summary: "Fresh reporting outlines the scale of damage to American military installations from recent Iranian attacks in the region.", source: "Al Jazeera", url: "https://www.aljazeera.com/news/2026/9/11/blew-the-hell-out-of-it-how-iran-damaged-us-bases-in-bahrain-jordan",
-      zh: { headline: "伊朗袭击巴林、约旦的美军基地，新消息公开", summary: "最近有新的报道。报道说，伊朗最近攻击了美国在巴林和约旦的军事基地，基地受到了很大的损坏。" } },
-    { desk: "World", priority: "routine", headline: "BRICS Leaders, Meeting in India, Urge Middle East Restraint", summary: "The bloc called for de-escalation in the region's conflicts and for protecting the free flow of global trade as tensions mount.", source: "Al Jazeera", url: "https://www.aljazeera.com/news/2026/9/12/brics-summit-opens-in-new-delhi-amid-wars-global-tensions-tariffs",
-      zh: { headline: "金砖国家领导人在印度开会，呼吁中东保持克制", summary: "中东的紧张情况越来越严重。金砖国家的领导人在印度开会，他们说各方应该冷静，也应该保护世界贸易的自由。" } },
-    { desk: "World", priority: "routine", headline: "Train Derails in Normandy, Injuring 44; Sabotage Suspected", summary: "A regional train carrying 186 passengers came off the tracks Friday evening; French investigators are examining suspicious circumstances.", source: "CBS News", url: "https://www.cbsnews.com/news/france-normandy-train-derailment-sabotage/",
-      zh: { headline: "法国诺曼底火车出轨，44人受伤，怀疑是人为破坏", summary: "星期五晚上，一列火车在法国诺曼底出轨了。车上一共有186名乘客，44人受伤。法国警方正在调查，怀疑有人故意破坏铁路。" } },
+    { desk: "World", priority: "bulletin", headline: "Trump, Visiting Ireland, Says He'd 'Love' to See the Island Reunified", summary: "During a weekend visit to his golf course in Ireland, the president said reunification would be 'fantastic' and inevitable, breaking with decades of US neutrality and drawing sharp criticism from UK Conservative leader Kemi Badenoch.", source: "The Washington Post, CNN", url: "https://www.washingtonpost.com/world/2026/09/12/trump-dublin-says-he-would-love-see-irish-reunification/",
+      zh: { headline: "川普訪問愛爾蘭，說支持南北統一", summary: "週末，川普總統去愛爾蘭自己的高爾夫球場玩。他說，如果愛爾蘭南北統一，那會「很棒」，而且以後一定會發生。以前美國都不會這樣說，所以這次讓很多人很驚訝。英國的政治人物聽了很不高興，罵了他一頓。" } },
+    { desk: "World", priority: "bulletin", headline: "Russia Launches Major Missile and Drone Barrage Across Ukraine", summary: "A large overnight Russian attack hit Odesa, Kryvyi Rih, Zaporizhzhia and the Kyiv region, killing several people, as Zelensky signaled he is open to meeting Putin at the upcoming G20 summit.", source: "AP", url: "https://www.usnews.com/news/world/articles/2026-09-12/russian-attacks-kill-six-injure-dozens-in-ukraine-moscow-says-it-hits-ships-plants",
+      zh: { headline: "俄羅斯半夜攻擊烏克蘭好幾個城市", summary: "昨天晚上，俄羅斯用飛彈和無人機，攻擊了烏克蘭好幾個地方，有人因此死掉了。烏克蘭總統澤倫斯基說，他願意跟俄羅斯總統普丁見面，兩人可能會在下個月的G20高峰會碰面。" } },
+    { desk: "World", priority: "routine", headline: "Nepal's Flood Death Toll and Rebuilding Costs Keep Climbing", summary: "Rescue teams from six countries are still searching for people missing since the late-August Bhote Koshi River flooding, with Nepal now facing an enormous recovery bill.", source: "Nepal News", url: "https://english.nepalnews.com/s/main-left/nepal-news-evening-briefing-saturday-september-12-2026/",
+      zh: { headline: "尼泊爾發生洪水，還在找失蹤的人", summary: "八月底，尼泊爾發生了很大的洪水。到現在，還有六個國家的救難隊在幫忙找失蹤的人。尼泊爾以後要花很多錢，才能把壞掉的地方修好。" } },
+    { desk: "World", priority: "routine", headline: "German Far-Right Leader's Comments Linking Arms Deal to 'Remigration' Spark Outrage", summary: "A regional AfD leader drew fierce backlash after tying a planned weapons plant to a future deportation drive; he later said he meant broader security equipment, not just arms.", source: "Euronews", url: "https://www.euronews.com/my-europe/2026/09/12/afds-ulrich-siegmunds-comments-on-arms-and-remigration-spark-fiece-criticism",
+      zh: { headline: "德國政治人物說錯話，惹大家生氣", summary: "德國一個很右派的政黨，有一位地方領袖說話讓大家不高興。他把一間武器工廠，跟「把外國人趕走」的計畫，兜在一起說。後來他趕快解釋，說自己講的是別的安全設備，不是武器。" } },
 
-    { desk: "Politics", priority: "bulletin", headline: "America Marks 25 Years Since the September 11 Attacks", summary: "Four former presidents joined ceremonies at the World Trade Center memorial while President Trump spoke at the Pentagon on the anniversary.", source: "CBS News", url: "https://www.cbsnews.com/live-updates/september-11-terrorist-attacks-25-years-memorial-2026-09-11/",
-      zh: { headline: "美国纪念“9·11”事件25周年", summary: "今天是“9·11”事件25周年。四位美国前总统一起参加了在世贸中心的纪念活动。特朗普总统在五角大楼发表了讲话。" } },
-    { desk: "Politics", priority: "routine", headline: "CIA Declassifies Dozens of Never-Before-Seen 9/11 Documents", summary: "The agency released 71 intelligence reports detailing what officials knew in the lead-up to the 2001 attacks.", source: "CBS News", url: "https://www.cbsnews.com/news/cia-declassified-9-11-files-intelligence-reports/",
-      zh: { headline: "中情局公开几十份关于“9·11”的旧文件", summary: "美国中央情报局公开了71份以前没有公开过的报告。这些报告说明了2001年“9·11”事件发生以前，政府知道哪些信息。" } },
-    { desk: "Politics", priority: "routine", headline: "Administration to Send $500 Checks to Nearly 1 Million ACA Enrollees", summary: "Affordable Care Act recipients across 30 states will start receiving the payments in October.", source: "CBS News", url: "https://www.cbsnews.com/news/trump-500-checks-obamacare-enrollees/",
-      zh: { headline: "政府将给近100万医保用户每人发500美元", summary: "美国政府决定给参加“平价医疗法案”的人发钱。一共有30个州，接近100万人可以拿到500美元。他们将在10月收到这笔钱。" } },
+    { desk: "Politics", priority: "bulletin", headline: "Trump Awards Charlie Kirk Posthumous Medal of Freedom on Eve of Assassination Anniversary", summary: "At the GOP's midterm convention in Dallas, the president honored the slain conservative activist and his widow Erika Kirk, a day before the one-year anniversary of Kirk's killing at a Utah campus event.", source: "AP, NBC News", url: "https://www.nbcnews.com/politics/donald-trump/trump-posthumously-awards-charlie-kirk-presidential-medal-freedom-mont-rcna237660",
+      zh: { headline: "柯克過世滿一年前，川普頒獎章給他", summary: "去年，保守派名人柯克在猶他州的一場活動上被人殺害了。明天就滿一年。今天，川普總統在共和黨的大會上，追頒「總統自由獎章」給柯克，也向他的太太艾莉卡表達關心。" } },
+    { desk: "Politics", priority: "bulletin", headline: "Ohio Senator Husted's Campaign Fires Aide Over Nazi-Themed Photo, Rhodesia Playlist", summary: "Senator Jon Husted's reelection campaign cut ties with a political director after a 2018 photo surfaced showing him in an SS-reenactment uniform, alongside a music playlist honoring white-minority-ruled Rhodesia.", source: "The Washington Post", url: "https://www.washingtonpost.com/politics/2026/09/11/ohio-senate-campaign-staffer-used-nazi-soldiers-profile-photo/",
+      zh: { headline: "參議員的助理因為舊照片被開除", summary: "有人找到一張2018年的舊照片，裡面參議員赫斯特的一位助理，穿著像納粹軍人的衣服。他的音樂清單裡，還有紀念以前白人統治羅德西亞的歌曲。事情曝光以後，競選團隊馬上把他開除了。" } },
+    { desk: "Politics", priority: "routine", headline: "Republican Blakeman Narrows Gap on Hochul in New York Governor's Race", summary: "September polling shows Republican Bruce Blakeman closing to within single digits of Democratic Governor Kathy Hochul, down from a 20-point gap in June, though independent polls still show her ahead.", source: "CBS News", url: "https://www.cbsnews.com/newyork/news/kathy-hochul-bruce-blakeman-governors-race-poll-august-2026/",
+      zh: { headline: "紐約州長選舉，兩人差距變小了", summary: "最新的調查顯示，共和黨的布萊克曼和現任州長霍楚爾，差距已經變得很小。六月的時候，兩人差了20個百分點，現在差距小很多了。不過，也有別的調查顯示，霍楚爾還是領先。" } },
 
-    { desk: "Business", priority: "urgent", headline: "Oil Tops $101 a Barrel as Middle East Conflict Widens", summary: "Crude closed at its highest level since May as the Red Sea standoff escalates, pushing US gas prices to $4.22 a gallon.", source: "CBS News, NBC News", url: "https://www.nbcnews.com/business/business-news/oil-hits-100-barrel-middle-east-conflict-intensifies-us-iran-trump-gas-rcna596752",
-      zh: { headline: "中东冲突加重，石油价格突破每桶101美元", summary: "因为中东的冲突越来越严重，石油价格涨到了今年5月以来的最高点。现在美国的汽油价格也涨到了每加仑4.22美元。" } },
-    { desk: "Business", priority: "urgent", headline: "Diesel Hits Record $6 a Gallon, Squeezing Freight and Farms", summary: "Record fuel costs are raising expenses across shipping and agriculture, with logistics firms warning of pass-through price hikes.", source: "NBC News", url: "https://www.cnn.com/2026/09/11/business/6-dollar-diesel-effects",
-      zh: { headline: "柴油价格创新高，每加仑6美元，运输业和农业压力大", summary: "柴油的价格现在是历史最高，每加仑要6美元。运输公司和农民因此花更多钱，物流公司说以后东西的价格也可能会涨。" } },
-    { desk: "Business", priority: "bulletin", headline: "Hot August Inflation Report Lifts Odds of a Fed Rate Hike to 90%", summary: "Traders now largely expect the Federal Reserve to raise rates this month after consumer prices accelerated faster than forecast.", source: "NBC News, CBS News", url: "https://www.cbsnews.com/news/august-cpi-report-inflation-fed-rates/",
-      zh: { headline: "8月物价上涨超出预期，美联储加息可能性升到90%", summary: "8月的物价比大家想的涨得更快。因此，很多人现在认为，美联储这个月很可能会加息。" } },
-    { desk: "Business", priority: "routine", headline: "L.L.Bean Doubles Down on Stores and Catalogs, Skips the AI Rush", summary: "The retailer is investing in physical locations and print marketing while deliberately steering clear of AI tools in its strategy.", source: "NBC News", url: "https://www.nbcnews.com/business/ceo-interviews/llbean-maine-roots-catalog-ai-stores-rcna596849",
-      zh: { headline: "L.L.Bean加大投资实体店和纸质目录，不用AI", summary: "这家公司决定继续开实体商店，也继续用纸做的商品目录做广告。它没有像别的公司一样，用人工智能做生意。" } },
-    { desk: "Business", priority: "routine", headline: "Trump Says He'd Be Fine With Chinese Automakers Building Cars in the US", summary: "The president signaled openness to Chinese manufacturers setting up US production, a notable shift in trade posture.", source: "NBC News", url: "https://www.nbcnews.com/politics/donald-trump/president-says-ok-china-building-cars-us-rcna597345",
-      zh: { headline: "特朗普说，他不反对中国车企在美国建厂", summary: "特朗普总统表示，如果中国的汽车公司想在美国生产汽车，他可以接受。这和他以前的贸易政策不太一样。" } },
+    { desk: "Business", priority: "urgent", headline: "Oil Surges Past $100 a Barrel as Middle East Conflict Widens", summary: "Brent crude has jumped roughly 25% since early August toward $101 a barrel as fighting spreads across the region, reviving fears of inflation and shipping disruptions.", source: "CNN Business", url: "https://www.cnn.com/2026/09/09/economy/oil-price-iran-war",
+      zh: { headline: "石油價格衝破一桶100美元", summary: "因為中東打仗的地方越來越多，石油從八月開始，價格漲了大概四分之一，快要到一桶101美元了。大家開始擔心，東西會變貴，運送貨物也會變困難。" } },
+    { desk: "Business", priority: "routine", headline: "Wall Street Snaps Four-Day Losing Streak as Inflation Fears Ease", summary: "The Dow, S&P 500 and Nasdaq all rallied Friday after in-line inflation data and retreating oil prices lifted sentiment, with Oracle jumping more than 6% on strong cloud earnings.", source: "The Washington Post (AP)", url: "https://www.washingtonpost.com/business/2026/09/11/wall-street-stocks-dow-nasdaq/b7beaa5c-ae1d-11f1-b498-8697f35a6743_story.html",
+      zh: { headline: "股市終於止跌了，甲骨文股價大漲", summary: "星期五，物價的消息跟大家猜的差不多，石油價格也稍微下降，股市就漲起來了，結束了連續四天下跌的情況。甲骨文公司因為雲端生意做得很好，股價一天就漲了超過6%。" } },
+    { desk: "Business", priority: "bulletin", headline: "10-Year Treasury Yield Nears 5% as Fed Rate-Hike Odds Jump", summary: "The benchmark yield hit its highest level since 2023 after hotter-than-expected inflation data pushed market-implied odds of a Federal Reserve rate hike this month to roughly 90%.", source: "Bloomberg", url: "https://www.bloomberg.com/news/articles/2026-09-11/global-bond-selloff-sends-10-year-treasury-yields-to-cusp-of-5",
+      zh: { headline: "美國政府借錢的利息快到5%了", summary: "最新的物價消息，比大家猜的還要高。市場現在覺得，美國中央銀行這個月很可能會升息，機率大概九成。美國政府借錢要付的利息，也漲到了2023年以來最高的地方。" } },
+    { desk: "Business", priority: "routine", headline: "Oracle Shares Jump as AI Cloud Revenue More Than Doubles", summary: "Oracle's cloud infrastructure revenue grew 121% last quarter to $7.4 billion, and the company booked more than $30 billion in new AI cloud contracts, prompting it to raise full-year guidance.", source: "SiliconANGLE", url: "https://siliconangle.com/2026/09/10/oracles-stock-moves-higher-on-surging-cloud-infrastructure-revenue-growth/",
+      zh: { headline: "甲骨文雲端生意大成長，股價跟著漲", summary: "甲骨文公司上一季的雲端生意，成長了121%，賺了74億美元。他們還簽了超過300億美元的新合約，所以公司決定，把今年的目標調得更高。" } },
 
-    { desk: "Tech", priority: "bulletin", headline: "AI Industry Leader Calls for a Slower, More Careful Pace on AI", summary: "A major AI company's chief warned that swarms of rogue AI agents could pose serious risks within months, while outlining a plan to 'pace the frontier.'", source: "CBS News, TechCrunch", url: "https://www.cbsnews.com/news/anthropic-ceo-dario-amodei-calls-slowdown-ai-development/",
-      zh: { headline: "AI行业负责人呼吁，AI的发展应该更慢、更小心", summary: "一家大型AI公司的负责人说，几个月以后，很多不受控制的AI可能会带来大问题。他还说了一个计划，希望大家能慢慢地、小心地发展AI。" } },
-    { desk: "Tech", priority: "bulletin", headline: "Revolut Discloses Customer Data Breach via Fake Government Requests", summary: "The fintech firm said attackers impersonated authorities to obtain customer information, raising fresh questions about verifying official data requests.", source: "TechCrunch", url: "https://techcrunch.com/2026/09/12/revolut-confirms-customer-data-breach-through-fake-government-requests/",
-      zh: { headline: "Revolut公司说，黑客假装政府部门，偷走用户信息", summary: "这家金融科技公司说，有黑客假装是政府部门，骗走了用户的个人信息。这件事让大家开始想，以后应该怎么确认这种官方请求是真的。" } },
-    { desk: "Tech", priority: "routine", headline: "Robotics Startup Mecka AI Nears $500M Valuation in Sequoia-Led Round", summary: "Investor appetite for robot-training data is fueling a fresh raise for the startup as the sector heats up.", source: "TechCrunch", url: "https://techcrunch.com/2026/09/11/mecka-ai-nears-500m-valuation-in-sequoia-led-deal-amid-rush-for-robot-training-data/",
-      zh: { headline: "机器人公司Mecka AI估值接近5亿美元，红杉领投", summary: "现在很多投资人对机器人训练数据很感兴趣。因为这样，这家做机器人的初创公司又拿到了一大笔新投资，公司的估值快到5亿美元了。" } },
-    { desk: "Tech", priority: "routine", headline: "Roblox Extends AI Game-Building Tools Beyond Its Own Platform", summary: "The update lets creators build and play AI-assisted games without staying inside the Roblox app.", source: "TechCrunch", url: "https://techcrunch.com/2026/09/11/roblox-is-making-it-easier-to-build-games-with-ai-and-play-them-outside-roblox/",
-      zh: { headline: "Roblox的AI游戏工具现在可以在平台外面用", summary: "以前，用Roblox的AI工具做游戏，只能在Roblox软件里面玩。现在不用打开Roblox，也可以做游戏，也可以玩游戏了。" } },
+    { desk: "Tech", priority: "bulletin", headline: "AI Leaders Amodei, Altman and Musk Rally Behind Call to Slow Down AI Development", summary: "Anthropic's CEO proposed independent safety evaluators with inside access to frontier AI labs, and OpenAI's Sam Altman and Elon Musk both publicly backed the idea, in a rare show of unity among rival lab chiefs.", source: "CNBC", url: "https://www.cnbc.com/2026/09/12/anthropics-amodei-proposes-plan-to-slow-the-pace-of-advancing-ai-capabilities.html",
+      zh: { headline: "好幾個AI公司的老闆都說要慢下來", summary: "Anthropic公司的老闆提出一個想法：找一群獨立的人，去檢查各家AI公司做得安不安全。沒想到，OpenAI的奧特曼和馬斯克都說支持這個想法。平常這幾個人常常互相競爭，這次難得意見一樣。" } },
+    { desk: "Tech", priority: "routine", headline: "DeepSeek Releases V4.1 Flash, a Faster Open Model It Says Beats Its Own Flagship", summary: "The Chinese AI lab's new model has a 1-million-token context window and MIT-licensed weights, and the company claims it outperforms its pricier V4-Pro model on speed, cost and benchmarks.", source: "SiliconANGLE", url: "https://siliconangle.com/2026/09/10/deepseek-releases-v4-1-flash-says-it-outperforms-flagship-v4-pro/",
+      zh: { headline: "中國的AI模型更新了，速度更快", summary: "中國的AI公司DeepSeek，推出了新模型「V4.1 Flash」。這個模型可以一次讀很多資料，而且大家都能免費使用。公司說，這個新模型比自己更貴的舊模型，還要快、還要好用。" } },
+    { desk: "Tech", priority: "routine", headline: "Pentagon Reportedly in Talks to Lend AI Cloud Startup Fluidstack $5 Billion", summary: "The Defense Department's Office of Strategic Capital is negotiating a loan to help the data-center firm, which has compute ties to Google and Anthropic, shore up the US component supply chain.", source: "Reuters (via Yahoo Finance)", url: "https://finance.yahoo.com/technology/ai/articles/pentagon-talks-lend-5-billion-215353279.html",
+      zh: { headline: "美國國防部可能借50億美元給一家AI公司", summary: "據說，美國國防部正在跟一家叫Fluidstack的公司談，要借給他們50億美元。這家公司跟Google、Anthropic都有合作。這筆錢主要是要幫忙美國，做出更多電腦晶片。" } },
+    { desk: "Tech", priority: "routine", headline: "OpenAI Opens Public Beta of Agents API for Building Autonomous Cloud Agents", summary: "The new managed API exposes the same infrastructure OpenAI uses internally for its Codex coding agent, handling sessions, context and multi-step recovery on OpenAI's servers.", source: "OpenAI", url: "https://openai.com/index/introducing-the-agents-api/",
+      zh: { headline: "OpenAI推出新工具，讓大家能做AI機器人", summary: "OpenAI開放了一個新工具，叫「智能體API」。這個工具，用的是他們自己寫程式的AI用的技術。以後大家做AI機器人的時候，不用自己煩惱很多技術問題，OpenAI的電腦會幫忙處理。" } },
 
-    { desk: "Sports", priority: "routine", headline: "Ben Shelton Reaches US Open Final After Beating Fellow American Frances Tiafoe", summary: "Shelton advanced to his first major final with an all-American semifinal win, though Hawk-Eye data has since cast doubt on his claimed 158 mph serve.", source: "Yahoo Sports", url: "https://sports.yahoo.com/tennis/live/us-open-mens-semifinals-score-live-updates-ben-shelton-frances-tiafoe-karen-khachanov-alexander-zverev-180000007.html",
-      zh: { headline: "谢尔顿击败蒂亚福，晋级美国网球公开赛决赛", summary: "谢尔顿在半决赛中赢了另一个美国选手蒂亚福，这是他第一次进大满贯赛事的决赛。不过，后来的数据显示，他那个158英里的发球速度可能不对。" } },
-    { desk: "Sports", priority: "routine", headline: "Team USA Faces Spain for a Spot in the FIBA Women's World Cup Final", summary: "Caitlin Clark and Team USA meet Spain in the semifinal with the championship game on the line.", source: "Yahoo Sports", url: "https://sports.yahoo.com/articles/watch-caitlin-clark-usa-vs-113825659.html",
-      zh: { headline: "美国女篮将战西班牙，争夺篮球世界杯决赛名额", summary: "克拉克和美国女子篮球队要在半决赛跟西班牙比赛。赢的球队可以进决赛，争夺冠军。" } },
-    { desk: "Sports", priority: "routine", headline: "Packers' Tucker Kraft and Raiders' Michael Mayer Land Big Tight End Deals", summary: "Green Bay extended Kraft for up to $92 million over four years, and Las Vegas signed Mayer to a three-year, $45 million contract.", source: "Yahoo Sports", url: "https://sports.yahoo.com/nfl/breaking-news/article/packers-tucker-kraft-signs-reported-4-year-75m-contract-extension-144923835.html",
-      zh: { headline: "克拉夫特和梅耶尔签下大合同", summary: "绿湾包装工队和克拉夫特续签了合同，四年最多9200万美元。拉斯维加斯突袭者队也和梅耶尔签了新合同，三年4500万美元。" } },
+    { desk: "Sports", priority: "bulletin", headline: "Texas Rallies From 20 Points Down to Stun No. 1 Ohio State", summary: "The Longhorns erased a huge fourth-quarter deficit and beat the top-ranked Buckeyes 24-23 on a late go-ahead touchdown, one of the largest comebacks ever against a No. 1 team.", source: "ESPN", url: "https://www.espn.com/college-football/recap/_/gameId/401856682",
+      zh: { headline: "德州大學美式足球隊大逆轉，贏了排名第一的球隊", summary: "德州大學的美式足球隊，比賽快結束的時候，還落後20分。但是最後幾分鐘，他們拼命追分，以24比23，打敗了排名第一的俄亥俄州大學。這是歷史上最厲害的逆轉之一。" } },
+    { desk: "Sports", priority: "bulletin", headline: "Rybakina Upsets Sabalenka to Win US Open, Becomes World No. 1", summary: "Elena Rybakina beat two-time defending champion Aryna Sabalenka in three sets to claim her third Grand Slam title and rise to the top of the world rankings for the first time.", source: "ESPN", url: "https://www.espn.com/tennis/story/_/id/49919035/us-open-2026-champion-title-elena-rybakina-aryna-sabalenka",
+      zh: { headline: "網球選手里巴金娜爆冷奪冠，變成世界第一", summary: "網球選手里巴金娜，在美國網球公開賽的決賽，打敗了已經連續兩年拿冠軍的莎芭蓮卡。這是里巴金娜第三次拿到大賽冠軍，她也第一次變成世界排名第一名。" } },
+    { desk: "Sports", priority: "routine", headline: "Baker Mayfield Signs $165 Million Extension With Buccaneers", summary: "Tampa Bay and its quarterback agreed to a three-year deal making him one of the highest-paid players in franchise history, ending a months-long contract standoff just before the season.", source: "NFL.com", url: "https://www.nfl.com/news/nfl-network-buccaneers-qb-baker-mayfield-agree-to-three-year-contract-extension",
+      zh: { headline: "美式足球選手梅菲爾德，簽下大合約", summary: "坦帕灣海盜隊，和四分衛梅菲爾德，簽了一份三年的新合約，總共1.65億美元。這是隊史上最大的合約之一。這件事談了好幾個月，終於在球季開始前談成了。" } },
 
-    { desk: "Science", priority: "bulletin", headline: "Scientists Show Heart Muscle Can Regenerate After a Heart Attack", summary: "Researchers demonstrated for the first time that damaged heart cells can regrow, challenging decades of assumptions about permanent cardiac injury.", source: "ScienceDaily", url: "https://www.sciencedaily.com/releases/2026/09/260909231754.htm",
-      zh: { headline: "科学家发现，心脏病发作后心肌可以再生", summary: "以前大家认为，心脏受伤以后不能恢复。这次科学家第一次证明，受伤的心脏细胞其实是可以重新长出来的。" } },
-    { desk: "Science", priority: "routine", headline: "Ozempic's Semaglutide May Slow Aging, Mouse Study Finds", summary: "The drug extended lifespan and improved memory and muscle function in older mice beyond the effects of calorie restriction alone.", source: "ScienceDaily", url: "https://www.sciencedaily.com/releases/2026/09/260911214238.htm",
-      zh: { headline: "老鼠实验显示，Ozempic的成分也许能让身体变老得更慢", summary: "研究人员给年纪大的老鼠用了这种药，发现老鼠活得更久了，记忆力和肌肉也变得更好。这个效果比只是少吃东西更好。" } },
-    { desk: "Science", priority: "routine", headline: "Mercury's Crust Points to a Fierier Volcanic Past Than Thought", summary: "New analysis finds far less silicon dioxide than expected, suggesting the planet's surface formed from deeper, more extensively melted rock.", source: "ScienceDaily", url: "https://www.sciencedaily.com/releases/2026/09/260911003854.htm",
-      zh: { headline: "新研究显示，水星以前的火山活动比想的更强烈", summary: "新的分析发现，水星表面的二氧化硅比大家以前想的少很多。这说明水星的表面可能是很深的岩石熔化后形成的。" } }
+    { desk: "Science", priority: "bulletin", headline: "Nighttime Light Exposure Linked to Early Signs of Heart Trouble", summary: "A UK Biobank study of more than 11,000 people found that greater light exposure at night was associated with a thickened heart wall and reduced cardiac function, suggesting darker bedrooms may protect the heart.", source: "ScienceDaily", url: "https://www.sciencedaily.com/releases/2026/09/260911003847.htm",
+      zh: { headline: "晚上開燈睡覺，可能對心臟不好", summary: "英國有一個研究，找了一萬一千多人做調查。結果發現，晚上接觸的光線越多，心臟的牆壁會變厚，心臟功能也會變差。所以研究人員建議，晚上睡覺的房間，最好關燈，暗一點比較好。" } },
+    { desk: "Science", priority: "bulletin", headline: "Weight-Loss Drug Semaglutide Linked to Sharp Drop in Asthma Attacks", summary: "New research found that people taking semaglutide (sold as Ozempic and Wegovy) had nearly 40% fewer asthma attacks and fewer COPD flare-ups, hinting at benefits beyond weight loss and diabetes control.", source: "ScienceDaily", url: "https://www.sciencedaily.com/releases/2026/09/260909005155.htm",
+      zh: { headline: "減肥藥竟然也能讓氣喘變少", summary: "新的研究發現，使用「司美格魯肽」這種減肥藥的人（就是Ozempic和Wegovy的主要成分），氣喘發作的次數，少了將近40%。這說明，這種藥的效果，可能不只是減肥和控制糖尿病而已。" } },
+    { desk: "Science", priority: "routine", headline: "Underground Detector Picks Up Tantalizing Hint of Dark Matter", summary: "The LUX-ZEPLIN experiment, buried nearly a mile below South Dakota, recorded an unusual particle signal that is hard to explain as background noise, though it isn't yet strong enough to confirm a discovery.", source: "ScienceDaily", url: "https://www.sciencedaily.com/releases/2026/09/260904000313.htm",
+      zh: { headline: "地底的機器好像發現暗物質的線索", summary: "在美國南達科他州，地底下差不多一公里深的地方，有一台叫LUX-ZEPLIN的機器。它最近偵測到一個很奇怪的訊號，很難用平常的原因來解釋。不過，現在還不能確定，這就是暗物質。" } }
   ];
 
   var PRIORITY_LABEL = { urgent: "Urgent", bulletin: "Bulletin", routine: "Routine" };
@@ -577,7 +573,7 @@
   function zhHTML(item) {
     if (!item.zh) return "";
     var spoken = item.zh.headline + "。" + item.zh.summary;
-    return '<div class="story-zh" lang="zh-Hans"><span class="zh-headline">' + esc(item.zh.headline) + '</span>' + esc(item.zh.summary) +
+    return '<div class="story-zh" lang="zh-Hant-TW"><span class="zh-headline">' + esc(item.zh.headline) + '</span>' + esc(item.zh.summary) +
       ' <button class="zh-audio-btn" type="button" data-zh="' + esc(spoken) + '" aria-label="Listen to this story in Chinese">🔊 Listen in Chinese</button>' +
       '</div>';
   }
@@ -673,7 +669,7 @@
     renderFeed();
   });
 
-  // ---- Chinese audio (browser speech synthesis; no network call) ----
+  // ---- Chinese audio (browser speech synthesis; no network call, works fully offline once the page is loaded) ----
   var currentAudioBtn = null;
 
   function resetAudioBtn(btn) {
@@ -700,9 +696,13 @@
     if (wasThisPlaying) return; // clicking the playing button just stops it
 
     var utter = new SpeechSynthesisUtterance(text);
-    utter.lang = "zh-CN";
+    utter.lang = "zh-TW";
     var voices = speechSynthesis.getVoices();
-    var zhVoice = voices.filter(function (v) { return /^zh/i.test(v.lang); })[0];
+    var zhVoices = voices.filter(function (v) { return /^zh/i.test(v.lang); });
+    // Prefer a Taiwan (zh-TW) voice; fall back to Hong Kong, then any Chinese voice.
+    var zhVoice = zhVoices.filter(function (v) { return /^zh-tw/i.test(v.lang); })[0]
+      || zhVoices.filter(function (v) { return /^zh-hk/i.test(v.lang); })[0]
+      || zhVoices[0];
     if (zhVoice) utter.voice = zhVoice;
     utter.onend = function () { if (currentAudioBtn === btn) { resetAudioBtn(btn); currentAudioBtn = null; } };
     utter.onerror = function () { if (currentAudioBtn === btn) { resetAudioBtn(btn); currentAudioBtn = null; } };
